@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no">
 
 <title>Selvan Adventure</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -14,7 +21,8 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
@@ -23,13 +31,17 @@ html,body{
     background:#42b9eb;
 }
 
-/* SCREEN - NEVER MOVES */
+/* =========================
+   FIXED SCREEN
+========================= */
+
 #game{
     position:fixed;
     inset:0;
     width:100vw;
     height:100vh;
     overflow:hidden;
+
     background:linear-gradient(
         #42b9eb 0%,
         #9ce3f7 65%,
@@ -37,791 +49,226 @@ html,body{
     );
 }
 
-/* WORLD - THIS MOVES */
+
+/* =========================
+   MOVING WORLD
+========================= */
+
 #world{
     position:absolute;
     left:0;
     top:0;
+
     width:4000px;
     height:100%;
+
     will-change:transform;
 }
 
-/* SUN */
+
+/* =========================
+   SUN
+========================= */
 
 #sun{
+
     position:absolute;
-    right:50px;
+
+    right:500px;
     top:80px;
-    width:70px;
-    height:70px;
+
+    width:75px;
+    height:75px;
+
     border-radius:50%;
+
     background:#fff19a;
 }
 
-/* CLOUDS */
+
+/* =========================
+   CLOUDS
+========================= */
 
 .cloud{
+
     position:absolute;
+
     width:110px;
     height:35px;
+
     background:white;
+
     opacity:.65;
+
     border-radius:40px;
 }
 
 .cloud:before,
 .cloud:after{
+
     content:"";
+
     position:absolute;
+
     background:white;
+
     border-radius:50%;
 }
 
 .cloud:before{
+
     width:55px;
     height:55px;
+
     left:15px;
     bottom:5px;
 }
 
 .cloud:after{
+
     width:65px;
     height:65px;
+
     right:10px;
     bottom:0;
 }
 
-.c1{left:50px;top:130px}
-.c2{left:500px;top:240px}
-.c3{left:950px;top:110px}
-.c4{left:1500px;top:220px}
-.c5{left:2200px;top:130px}
-.c6{left:2900px;top:250px}
+.c1{
+    left:50px;
+    top:130px;
+}
 
-/* MOUNTAINS */
+.c2{
+    left:500px;
+    top:240px;
+}
+
+.c3{
+    left:950px;
+    top:110px;
+}
+
+.c4{
+    left:1500px;
+    top:220px;
+}
+
+.c5{
+    left:2200px;
+    top:130px;
+}
+
+.c6{
+    left:2900px;
+    top:250px;
+}
+
+
+/* =========================
+   MOUNTAINS
+========================= */
 
 .mountain{
+
     position:absolute;
+
     bottom:125px;
+
     width:0;
     height:0;
+
     border-left:150px solid transparent;
     border-right:150px solid transparent;
+
     border-bottom:240px solid #62b77a;
 }
 
-.m1{left:0}
-.m2{left:400px;border-bottom-color:#55a96d}
-.m3{left:850px}
-.m4{left:1350px;border-bottom-color:#55a96d}
-.m5{left:1900px}
-.m6{left:2500px;border-bottom-color:#55a96d}
-.m7{left:3100px}
+.m1{
+    left:0;
+}
 
-/* GROUND */
+.m2{
+    left:400px;
+    border-bottom-color:#55a96d;
+}
+
+.m3{
+    left:850px;
+}
+
+.m4{
+    left:1350px;
+    border-bottom-color:#55a96d;
+}
+
+.m5{
+    left:1900px;
+}
+
+.m6{
+    left:2500px;
+    border-bottom-color:#55a96d;
+}
+
+.m7{
+    left:3100px;
+}
+
+
+/* =========================
+   GROUND
+========================= */
 
 #ground{
+
     position:absolute;
+
     left:0;
     bottom:0;
+
     width:4000px;
     height:125px;
+
     background:
-        linear-gradient(
-            to bottom,
-            #45b957 0px,
-            #45b957 15px,
-            #70452b 15px,
-            #70452b 100%
-        );
+
+    linear-gradient(
+        to bottom,
+        #45b957 0px,
+        #45b957 15px,
+        #70452b 15px,
+        #70452b 100%
+    );
 }
 
-/* PLAYER */
+
+/* =========================
+   PLAYER
+========================= */
 
 #player{
+
     position:absolute;
+
     left:100px;
     bottom:125px;
+
     width:44px;
     height:64px;
+
     z-index:10;
+
+    transition:none;
 }
+
 
 /* HAT */
 
 .hat{
+
     position:absolute;
+
     left:5px;
     top:0;
-    width:34px;
-    height:15px;
-    background:#ed554c;
-    border-radius:8px 8px 2px 2px;
-}
 
-.hat:after{
-    content:"";
-    position:absolute;
-    left:-5px;
-    top:10px;
-    width:18px;
-    height:7px;
-    background:#ed554c;
-}
-
-/* HAIR */
-
-.hair{
-    position:absolute;
-    left:9px;
-    top:12px;
-    width:27px;
-    height:23px;
-    background:#29324b;
-    border-radius:5px;
-}
-
-/* FACE */
-
-.face{
-    position:absolute;
-    left:11px;
-    top:18px;
-    width:22px;
-    height:22px;
-    background:#ffd09d;
-}
-
-/* EYES */
-
-.face:before{
-    content:"•  •";
-    position:absolute;
-    left:2px;
-    top:1px;
-    color:#20263b;
-    font-size:12px;
-}
-
-/* BODY */
-
-.body{
-    position:absolute;
-    left:7px;
-    top:38px;
-    width:31px;
-    height:17px;
-    background:#28b99d;
-    border-radius:5px;
-}
-
-/* LEGS */
-
-.leg{
-    position:absolute;
-    top:53px;
-    width:13px;
-    height:11px;
-    background:#29324b;
-}
-
-.leg1{left:5px}
-.leg2{right:5px}
-
-/* COINS */
-
-.coin{
-    position:absolute;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#ffd52f;
-    border:3px solid #fff09a;
-    color:#a76a14;
-    font-size:17px;
-    font-weight:bold;
-    text-align:center;
-    line-height:24px;
-    z-index:5;
-}
-
-/* ENEMIES */
-
-.enemy{
-    position:absolute;
-    width:44px;
-    height:42px;
-    bottom:125px;
-    background:#d95770;
-    border-radius:18px 18px 8px 8px;
-    z-index:8;
-}
-
-.enemy:before{
-    content:"•  •";
-    position:absolute;
-    top:5px;
-    left:8px;
-    color:white;
-    font-size:18px;
-}
-
-.enemy:after{
-    content:"";
-    position:absolute;
-    bottom:-5px;
-    left:4px;
-    width:36px;
-    height:8px;
-    background:#873b5c;
-    border-radius:8px;
-}
-
-/* FLAG */
-
-#flag{
-    position:absolute;
-    left:3700px;
-    bottom:125px;
-    width:9px;
-    height:130px;
-    background:#29324b;
-    z-index:5;
-}
-
-#flag:before{
-    content:"";
-    position:absolute;
-    left:9px;
-    top:5px;
-    width:75px;
-    height:42px;
-    background:#ff5968;
-    clip-path:polygon(0 0,100% 30%,0 65%);
-}
-
-/* HUD */
-
-#hud{
-    position:fixed;
-    top:12px;
-    left:10px;
-    right:10px;
-    z-index:50;
-    display:flex;
-    justify-content:space-between;
-    pointer-events:none;
-}
-
-.hud{
-    background:#17203be8;
-    color:white;
-    border:2px solid #8996b5;
-    border-radius:14px;
-    padding:8px 10px;
-    font-size:14px;
-    font-weight:bold;
-}
-
-/* CONTROLS */
-
-#controls{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:20px;
-    z-index:50;
-    display:flex;
-    justify-content:space-between;
-    padding:0 25px;
-}
-
-.group{
-    display:flex;
-    gap:12px;
-}
-
-.control{
-    width:72px;
-    height:72px;
-    border-radius:22px;
-    border:3px solid #aab5ce;
-    background:#111a35dd;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    font-weight:bold;
-    box-shadow:0 6px 0 #080d1c;
-}
-
-.control:active{
-    transform:translateY(5px);
-    box-shadow:0 2px 0 #080d1c;
-}
-
-/* WIN */
-
-#win{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:#071027dd;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    text-align:center;
-}
-
-.winbox{
-    background:#17203b;
-    border:3px solid #8996b5;
-    border-radius:24px;
-    padding:30px;
-}
-
-.winbox h1{
-    color:#ffe35a;
-    margin-bottom:10px;
-}
-</style>
-</head>
-
-<body>
-
-<div id="game">
-
-    <!-- WORLD THAT SCROLLS -->
-    <div id="world">
-
-        <div id="sun"></div>
-
-        <div class="cloud c1"></div>
-        <div class="cloud c2"></div>
-        <div class="cloud c3"></div>
-        <div class="cloud c4"></div>
-        <div class="cloud c5"></div>
-        <div class="cloud c6"></div>
-
-        <div class="mountain m1"></div>
-        <div class="mountain m2"></div>
-        <div class="mountain m3"></div>
-        <div class="mountain m4"></div>
-        <div class="mountain m5"></div>
-        <div class="mountain m6"></div>
-        <div class="mountain m7"></div>
-
-        <div id="ground"></div>
-
-        <!-- PLAYER -->
-        <div id="player">
-
-            <div class="hat"></div>
-            <div class="hair"></div>
-            <div class="face"></div>
-            <div class="body"></div>
-            <div class="leg leg1"></div>
-            <div class="leg leg2"></div>
-
-        </div>
-
-        <!-- COINS -->
-        <div class="coin" style="left:350px;bottom:220px">$</div>
-        <div class="coin" style="left:550px;bottom:300px">$</div>
-        <div class="coin" style="left:800px;bottom:220px">$</div>
-        <div class="coin" style="left:1050px;bottom:290px">$</div>
-        <div class="coin" style="left:1300px;bottom:220px">$</div>
-        <div class="coin" style="left:1550px;bottom:300px">$</div>
-        <div class="coin" style="left:1800px;bottom:220px">$</div>
-        <div class="coin" style="left:2100px;bottom:290px">$</div>
-        <div class="coin" style="left:2400px;bottom:220px">$</div>
-        <div class="coin" style="left:2700px;bottom:300px">$</div>
-        <div class="coin" style="left:3000px;bottom:220px">$</div>
-        <div class="coin" style="left:3300px;bottom:290px">$</div>
-
-        <!-- ENEMIES -->
-        <div class="enemy" style="left:650px"></div>
-        <div class="enemy" style="left:1150px"></div>
-        <div class="enemy" style="left:1650px"></div>
-        <div class="enemy" style="left:2200px"></div>
-        <div class="enemy" style="left:2800px"></div>
-        <div class="enemy" style="left:3250px"></div>
-
-        <!-- FINISH -->
-        <div id="flag"></div>
-
-    </div>
-</div>
-
-
-<!-- HUD -->
-
-<div id="hud">
-
-    <div class="hud">
-        ⭐ <span id="score">0</span>
-    </div>
-
-    <div class="hud">
-        🪙 <span id="coins">0</span>
-    </div>
-
-    <div class="hud">
-        ❤️ <span id="lives">3</span>
-    </div>
-
-    <div class="hud">
-        🌍 1
-    </div>
-
-</div>
-
-
-<!-- CONTROLS -->
-
-<div id="controls">
-
-    <div class="group">
-
-        <div class="control" id="left">◀</div>
-        <div class="control" id="right">▶</div>
-
-    </div>
-
-    <div class="group">
-
-        <div class="control" id="jump">▲</div>
-
-    </div>
-
-</div>
-
-
-<!-- WIN -->
-
-<div id="win">
-
-    <div class="winbox">
-
-        <h1>🏆 YOU WIN!</h1>
-
-        <p>Selvan completed the adventure!</p>
-
-    </div>
-
-</div>
-
-
-<script>
-
-const world =
-document.getElementById("world");
-
-const player =
-document.getElementById("player");
-
-let playerX = 100;
-let playerY = 0;
-
-let velocityY = 0;
-let jumping = false;
-
-let leftPressed = false;
-let rightPressed = false;
-
-let score = 0;
-let coinCount = 0;
-
-let cameraX = 0;
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-function setupButton(id,down,up){
-
-    const b =
-    document.getElementById(id);
-
-    b.addEventListener(
-        "touchstart",
-        e=>{
-            e.preventDefault();
-            down();
-        },
-        {passive:false}
-    );
-
-    b.addEventListener(
-        "touchend",
-        e=>{
-            e.preventDefault();
-            up();
-        },
-        {passive:false}
-    );
-
-    b.addEventListener(
-        "touchcancel",
-        up
-    );
-
-    b.addEventListener(
-        "mousedown",
-        down
-    );
-
-    b.addEventListener(
-        "mouseup",
-        up
-    );
-}
-
-setupButton(
-    "left",
-    ()=>leftPressed=true,
-    ()=>leftPressed=false
-);
-
-setupButton(
-    "right",
-    ()=>rightPressed=true,
-    ()=>rightPressed=false
-);
-
-
-/* JUMP */
-
-function doJump(){
-
-    if(!jumping){
-
-        velocityY=14;
-        jumping=true;
-
-    }
-}
-
-document
-.getElementById("jump")
-.addEventListener(
-    "touchstart",
-    e=>{
-        e.preventDefault();
-        doJump();
-    },
-    {passive:false}
-);
-
-document
-.getElementById("jump")
-.addEventListener(
-    "mousedown",
-    doJump
-);
-
-
-/* KEYBOARD */
-
-document.addEventListener(
-    "keydown",
-    e=>{
-
-        if(e.key==="ArrowLeft")
-            leftPressed=true;
-
-        if(e.key==="ArrowRight")
-            rightPressed=true;
-
-        if(
-            e.key==="ArrowUp" ||
-            e.code==="Space"
-        )
-            doJump();
-
-    }
-);
-
-document.addEventListener(
-    "keyup",
-    e=>{
-
-        if(e.key==="ArrowLeft")
-            leftPressed=false;
-
-        if(e.key==="ArrowRight")
-            rightPressed=false;
-
-    }
-);
-
-
-/* =========================
-   COINS
-========================= */
-
-function collectCoins(){
-
-    document
-    .querySelectorAll(".coin")
-    .forEach(coin=>{
-
-        if(
-            coin.dataset.taken
-        )
-            return;
-
-        const coinX =
-            parseInt(
-                coin.style.left
-            );
-
-        if(
-            Math.abs(
-                playerX-coinX
-            )<45
-        ){
-
-            coin.dataset.taken="1";
-
-            coin.style.display="none";
-
-            coinCount++;
-
-            score+=100;
-
-            document
-            .getElementById("coins")
-            .textContent=coinCount;
-
-            document
-            .getElementById("score")
-            .textContent=score;
-
-        }
-
-    });
-
-}
-
-
-/* =========================
-   GAME
-========================= */
-
-function update(){
-
-    /* MOVE */
-
-    if(leftPressed)
-        playerX-=5;
-
-    if(rightPressed)
-        playerX+=5;
-
-
-    /* LIMIT */
-
-    if(playerX<0)
-        playerX=0;
-
-    if(playerX>3650)
-        playerX=3650;
-
-
-    /* JUMP */
-
-    if(jumping){
-
-        playerY+=velocityY;
-
-        velocityY-=0.7;
-
-
-        if(playerY<=0){
-
-            playerY=0;
-
-            velocityY=0;
-
-            jumping=false;
-
-        }
-
-    }
-
-
-    /* PLAYER */
-
-    player.style.left=
-        playerX+"px";
-
-    player.style.bottom=
-        (125+playerY)+"px";
-
-
-    /* CAMERA */
-
-    const target =
-        playerX-
-        window.innerWidth*0.35;
-
-
-    cameraX +=
-        (
-            target-cameraX
-        )*0.12;
-
-
-    if(cameraX<0)
-        cameraX=0;
-
-
-    const maxCamera =
-        4000-
-        window.innerWidth;
-
-
-    if(cameraX>maxCamera)
-        cameraX=maxCamera;
-
-
-    /* IMPORTANT:
-       ONLY WORLD MOVES */
-
-    world.style.transform=
-        "translate3d("+
-        (-cameraX)+
-        "px,0,0)";
-
-
-    /* COINS */
-
-    collectCoins();
-
-
-    /* WIN */
-
-    if(playerX>=3600){
-
-        document
-        .getElementById("win")
-        .style.display="flex";
-
-    }
-
-
-    requestAnimationFrame(update);
-
-}
-
-update();
-
-</script>
-
-</body>
-</html>
+    width:34
