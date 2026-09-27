@@ -1,166 +1,225 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Pixel Quest Adventure</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
+
+<title>Pixel Quest</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
 
 html,body{
-  margin:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#11162b;
-  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  background:#10152d;
+  font-family:Arial,sans-serif;
+  touch-action:none;
 }
-
-body{touch-action:none}
 
 #game{
   position:fixed;
   inset:0;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  height:100%;
   display:block;
-  background:#62c8f4;
 }
+
+/* HUD */
 
 #hud{
   position:fixed;
-  z-index:4;
-  top:max(10px,env(safe-area-inset-top));
+  top:12px;
   left:10px;
   right:10px;
+  z-index:5;
+
   display:flex;
   justify-content:space-between;
   gap:6px;
+
   pointer-events:none;
 }
 
-.badge{
-  padding:7px 10px;
-  border:3px solid #78839f;
-  border-radius:16px;
-  background:#171d36dd;
-  color:#fff;
-  font-weight:900;
-  font-size:clamp(13px,3.8vw,18px);
-  text-shadow:2px 2px #0008;
-  box-shadow:0 5px 15px #0003;
+.box{
+  background:#141b35e8;
+  border:2px solid #8c98b5;
+  border-radius:14px;
+
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+
+  padding:8px 10px;
+
+  box-shadow:0 4px 12px #0005;
 }
+
+/* CONTROLS */
 
 #controls{
   position:fixed;
-  z-index:5;
   left:0;
   right:0;
-  bottom:max(14px,env(safe-area-inset-bottom));
+  bottom:18px;
+
+  z-index:6;
+
   display:flex;
   justify-content:space-between;
-  padding:0 22px;
+
+  padding:0 18px;
+
   pointer-events:none;
 }
 
-.group{
+.controlGroup{
   display:flex;
-  gap:14px;
+  gap:12px;
 }
 
-.btn{
-  pointer-events:auto;
-  width:68px;
-  height:68px;
+.control{
+  width:72px;
+  height:72px;
+
   border-radius:22px;
-  border:3px solid #a9b2c9;
-  background:#171d36cc;
-  color:#fff;
-  display:grid;
-  place-items:center;
-  font-size:31px;
-  font-weight:900;
-  box-shadow:0 7px 0 #080b18aa;
+
+  background:#151c38dd;
+
+  border:3px solid #aeb8d0;
+
+  color:white;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:32px;
+  font-weight:bold;
+
+  box-shadow:
+    0 7px 0 #070b18aa;
+
+  pointer-events:auto;
+
   user-select:none;
-  -webkit-user-select:none;
 }
 
-.btn:active{
+.control:active{
   transform:translateY(5px);
-  box-shadow:0 2px 0 #080b18aa;
-  background:#2b3558;
+  box-shadow:0 2px 0 #070b18aa;
+  background:#354064;
 }
 
-#overlay{
+/* MENU */
+
+#menu{
   position:fixed;
-  z-index:10;
   inset:0;
-  background:#0a1022e8;
-  display:grid;
-  place-items:center;
+
+  z-index:20;
+
+  background:#080d20dd;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
   padding:20px;
 }
 
 .panel{
-  width:min(92vw,440px);
-  padding:28px 22px;
-  border:3px solid #7180a2;
-  border-radius:26px;
-  background:#171d36f5;
-  color:#fff;
+  width:min(92%,430px);
+
+  background:#161e3bf5;
+
+  border:3px solid #7886aa;
+
+  border-radius:25px;
+
+  padding:30px 20px;
+
   text-align:center;
-  box-shadow:0 20px 70px #0008;
+
+  color:white;
+
+  box-shadow:0 20px 60px #0009;
 }
 
-h1{
-  font-size:clamp(34px,10vw,50px);
-  margin:0;
+.panel h1{
+  font-size:46px;
   color:#ffe35a;
-  text-shadow:4px 4px #b84263;
+  text-shadow:4px 4px #b83c61;
 }
 
-h2{
-  color:#7de7ff;
-  margin:4px 0 10px;
+.panel h2{
+  color:#73e7ff;
+  margin:5px 0 15px;
 }
 
-p{
-  color:#dbe5ff;
+.panel p{
+  color:#d8e4ff;
   line-height:1.5;
+  margin-bottom:15px;
 }
 
 button{
   border:0;
-  border-radius:15px;
-  padding:13px 22px;
-  margin:6px;
+  border-radius:14px;
+
+  padding:14px 25px;
+
+  margin:5px;
+
   font-size:17px;
-  font-weight:900;
-  background:#ffd24d;
-  color:#17203a;
-  box-shadow:0 5px #b47c20;
+  font-weight:bold;
+
+  background:#ffd34d;
+  color:#182039;
+
+  box-shadow:0 5px #ae7820;
 }
 
 button:active{
-  transform:translateY(3px);
-  box-shadow:0 2px #b47c20;
+  transform:translateY(4px);
+  box-shadow:0 1px #ae7820;
 }
 
-.secondary{
-  background:#72dec6;
-  box-shadow:0 5px #3b9d89;
+#help{
+  background:#6edcc4;
+  box-shadow:0 5px #398f7e;
 }
 
 .hidden{
   display:none!important;
 }
 
-@media (orientation:landscape) and (max-height:520px){
-  .btn{
-    width:58px;
-    height:58px;
+/* Small screens */
+
+@media(max-width:380px){
+
+  .control{
+    width:62px;
+    height:62px;
   }
+
+  .box{
+    font-size:13px;
+    padding:7px;
+  }
+
 }
 </style>
 </head>
@@ -169,33 +228,310 @@ button:active{
 
 <canvas id="game"></canvas>
 
+<!-- HUD -->
+
 <div id="hud">
-  <div class="badge">⭐ <span id="score">0</span></div>
-  <div class="badge">🪙 <span id="coins">0</span></div>
-  <div class="badge">❤️ <span id="lives">3</span></div>
-  <div class="badge">🌍 <span id="level">1</span></div>
+
+  <div class="box">
+    ⭐ <span id="score">0</span>
+  </div>
+
+  <div class="box">
+    🪙 <span id="coins">0</span>
+  </div>
+
+  <div class="box">
+    ❤️ <span id="lives">3</span>
+  </div>
+
+  <div class="box">
+    🌍 <span id="level">1</span>
+  </div>
+
 </div>
+
+
+<!-- CONTROLS -->
 
 <div id="controls">
 
-  <div class="group">
-    <div class="btn" data-key="left">◀</div>
-    <div class="btn" data-key="right">▶</div>
+  <div class="controlGroup">
+
+    <div
+      class="control"
+      id="left">
+      ◀
+    </div>
+
+    <div
+      class="control"
+      id="right">
+      ▶
+    </div>
+
   </div>
 
-  <div class="group">
-    <div class="btn" data-key="jump">▲</div>
+
+  <div class="controlGroup">
+
+    <div
+      class="control"
+      id="jump">
+      ▲
+    </div>
+
   </div>
 
 </div>
 
-<div id="overlay">
+
+<!-- MENU -->
+
+<div id="menu">
 
   <div class="panel">
 
     <h1>PIXEL QUEST</h1>
 
-    <h2>Adventure</h2>
+    <h2>SELVA ADVENTURE</h2>
 
     <p>
-      Run, jump, collect coins,
+      🏃 Run through the world<br>
+      🪙 Collect coins<br>
+      👾 Jump on enemies<br>
+      🏁 Reach the flag
+    </p>
+
+    <button id="start">
+      ▶ PLAY GAME
+    </button>
+
+    <button id="help">
+      HOW TO PLAY
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+const canvas =
+document.getElementById("game");
+
+const ctx =
+canvas.getContext("2d");
+
+let W;
+let H;
+
+function resize(){
+
+  W=window.innerWidth;
+  H=window.innerHeight;
+
+  const dpr=
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+  canvas.width=
+    W*dpr;
+
+  canvas.height=
+    H*dpr;
+
+  canvas.style.width=
+    W+"px";
+
+  canvas.style.height=
+    H+"px";
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+}
+
+window.addEventListener(
+  "resize",
+  resize
+);
+
+resize();
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+const input={
+  left:false,
+  right:false,
+  jump:false
+};
+
+function button(id,key){
+
+  const el=
+    document.getElementById(id);
+
+  const down=e=>{
+    e.preventDefault();
+    input[key]=true;
+  };
+
+  const up=e=>{
+    e.preventDefault();
+    input[key]=false;
+  };
+
+  el.addEventListener(
+    "touchstart",
+    down,
+    {passive:false}
+  );
+
+  el.addEventListener(
+    "touchend",
+    up,
+    {passive:false}
+  );
+
+  el.addEventListener(
+    "touchcancel",
+    up,
+    {passive:false}
+  );
+
+  el.addEventListener(
+    "mousedown",
+    down
+  );
+
+  el.addEventListener(
+    "mouseup",
+    up
+  );
+
+  el.addEventListener(
+    "mouseleave",
+    up
+  );
+}
+
+button("left","left");
+button("right","right");
+button("jump","jump");
+
+
+/* KEYBOARD */
+
+window.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key==="a"
+    )
+      input.left=true;
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key==="d"
+    )
+      input.right=true;
+
+    if(
+      e.key==="ArrowUp" ||
+      e.key===" " ||
+      e.key==="w"
+    )
+      input.jump=true;
+
+  }
+);
+
+window.addEventListener(
+  "keyup",
+  e=>{
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key==="a"
+    )
+      input.left=false;
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key==="d"
+    )
+      input.right=false;
+
+    if(
+      e.key==="ArrowUp" ||
+      e.key===" " ||
+      e.key==="w"
+    )
+      input.jump=false;
+
+  }
+);
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let playing=false;
+
+let score=0;
+let coinCount=0;
+let lives=3;
+let level=1;
+
+let camera=0;
+
+let player;
+
+let platforms=[];
+let coins=[];
+let enemies=[];
+
+
+/* =====================================================
+   LEVELS
+===================================================== */
+
+const levelData=[
+
+[
+  [0,0.82,0.55],
+  [0.62,0.82,0.38],
+
+  [0.12,0.68,0.18],
+  [0.34,0.57,0.16],
+  [0.58,0.67,0.17],
+  [0.78,0.55,0.16]
+],
+
+[
+  [0,0.82,0.40],
+  [0.47,0.82,0.28],
+  [0.80,0.82,0.40],
+
+  [0.10,0.67,0.18],
+  [0.32,0.55,0.16],
+  [0.52,0.67,0.18],
+  [0.70,0.52
