@@ -1,274 +1,673 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no">
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Selvan Adventure</title>
 
 <style>
-
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    touch-action:none;
-    font-family:Arial,sans-serif;
-    background:#42b9eb;
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  touch-action:none;
 }
-
-/* =========================
-   FIXED SCREEN
-========================= */
 
 #game{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    overflow:hidden;
-
-    background:linear-gradient(
-        #42b9eb 0%,
-        #9ce3f7 65%,
-        #dff9ff 100%
-    );
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  background:linear-gradient(#48c5ee 0%,#8de3ff 65%,#d9f7ff 100%);
 }
 
-
-/* =========================
-   MOVING WORLD
-========================= */
-
+/* WORLD */
 #world{
-    position:absolute;
-    left:0;
-    top:0;
-
-    width:4000px;
-    height:100%;
-
-    will-change:transform;
+  position:absolute;
+  left:0;
+  top:0;
+  width:5000px;
+  height:100%;
+  transform:translate3d(0,0,0);
 }
 
-
-/* =========================
-   SUN
-========================= */
-
-#sun{
-
-    position:absolute;
-
-    right:500px;
-    top:80px;
-
-    width:75px;
-    height:75px;
-
-    border-radius:50%;
-
-    background:#fff19a;
+/* SUN */
+.sun{
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#ffd83d;
+  top:55px;
+  left:500px;
+  box-shadow:0 0 35px rgba(255,216,61,.7);
 }
 
-
-/* =========================
-   CLOUDS
-========================= */
-
+/* CLOUDS */
 .cloud{
-
-    position:absolute;
-
-    width:110px;
-    height:35px;
-
-    background:white;
-
-    opacity:.65;
-
-    border-radius:40px;
+  position:absolute;
+  width:130px;
+  height:42px;
+  background:white;
+  border-radius:40px;
+  opacity:.9;
 }
 
 .cloud:before,
 .cloud:after{
-
-    content:"";
-
-    position:absolute;
-
-    background:white;
-
-    border-radius:50%;
+  content:"";
+  position:absolute;
+  background:white;
+  border-radius:50%;
 }
 
 .cloud:before{
-
-    width:55px;
-    height:55px;
-
-    left:15px;
-    bottom:5px;
+  width:55px;
+  height:55px;
+  left:20px;
+  top:-25px;
 }
 
 .cloud:after{
-
-    width:65px;
-    height:65px;
-
-    right:10px;
-    bottom:0;
+  width:65px;
+  height:65px;
+  right:15px;
+  top:-32px;
 }
 
-.c1{
-    left:50px;
-    top:130px;
-}
+.c1{left:300px;top:120px}
+.c2{left:1000px;top:180px;transform:scale(.8)}
+.c3{left:1800px;top:90px;transform:scale(1.2)}
+.c4{left:2900px;top:160px}
+.c5{left:3900px;top:100px;transform:scale(.9)}
 
-.c2{
-    left:500px;
-    top:240px;
-}
-
-.c3{
-    left:950px;
-    top:110px;
-}
-
-.c4{
-    left:1500px;
-    top:220px;
-}
-
-.c5{
-    left:2200px;
-    top:130px;
-}
-
-.c6{
-    left:2900px;
-    top:250px;
-}
-
-
-/* =========================
-   MOUNTAINS
-========================= */
-
+/* MOUNTAINS */
 .mountain{
-
-    position:absolute;
-
-    bottom:125px;
-
-    width:0;
-    height:0;
-
-    border-left:150px solid transparent;
-    border-right:150px solid transparent;
-
-    border-bottom:240px solid #62b77a;
+  position:absolute;
+  bottom:125px;
+  width:0;
+  height:0;
+  border-left:220px solid transparent;
+  border-right:220px solid transparent;
+  border-bottom:300px solid #77b978;
 }
 
-.m1{
-    left:0;
-}
+.m1{left:300px}
+.m2{left:1000px;transform:scale(1.2)}
+.m3{left:1800px;transform:scale(.8)}
+.m4{left:2700px;transform:scale(1.3)}
+.m5{left:3700px;transform:scale(.9)}
 
-.m2{
-    left:400px;
-    border-bottom-color:#55a96d;
-}
-
-.m3{
-    left:850px;
-}
-
-.m4{
-    left:1350px;
-    border-bottom-color:#55a96d;
-}
-
-.m5{
-    left:1900px;
-}
-
-.m6{
-    left:2500px;
-    border-bottom-color:#55a96d;
-}
-
-.m7{
-    left:3100px;
-}
-
-
-/* =========================
-   GROUND
-========================= */
-
+/* GROUND */
 #ground{
-
-    position:absolute;
-
-    left:0;
-    bottom:0;
-
-    width:4000px;
-    height:125px;
-
-    background:
-
-    linear-gradient(
-        to bottom,
-        #45b957 0px,
-        #45b957 15px,
-        #70452b 15px,
-        #70452b 100%
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:5000px;
+  height:125px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #42a83f 0px,
+      #42a83f 35px,
+      #369535 35px,
+      #369535 70px
     );
+  border-top:8px solid #23752b;
 }
+
+.ground-line{
+  position:absolute;
+  bottom:85px;
+  height:7px;
+  width:100%;
+  background:#2d842d;
+}
+
+/* PLAYER */
+#player{
+  position:absolute;
+  width:44px;
+  height:64px;
+  left:100px;
+  bottom:125px;
+  z-index:20;
+}
+
+.head{
+  position:absolute;
+  width:36px;
+  height:36px;
+  left:4px;
+  top:0;
+  border-radius:50%;
+  background:#f0b27a;
+  border:3px solid #222;
+}
+
+.hair{
+  position:absolute;
+  width:38px;
+  height:15px;
+  left:3px;
+  top:-2px;
+  background:#21160f;
+  border-radius:18px 18px 5px 5px;
+  z-index:2;
+}
+
+.eye{
+  position:absolute;
+  width:5px;
+  height:7px;
+  background:#111;
+  border-radius:50%;
+  top:15px;
+  z-index:3;
+}
+
+.eye.left{left:12px}
+.eye.right{right:12px}
+
+.body{
+  position:absolute;
+  width:34px;
+  height:25px;
+  left:5px;
+  top:34px;
+  background:#e63b32;
+  border:3px solid #222;
+  border-radius:8px;
+}
+
+.leg{
+  position:absolute;
+  width:10px;
+  height:13px;
+  background:#244b9b;
+  bottom:0;
+  border:2px solid #222;
+}
+
+.leg.left{left:7px}
+.leg.right{right:7px}
+
+/* COINS */
+.coin{
+  position:absolute;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:#ffd72f;
+  border:4px solid #e29b00;
+  box-shadow:0 0 10px rgba(255,215,47,.7);
+  z-index:10;
+  animation:coinSpin .7s linear infinite;
+}
+
+@keyframes coinSpin{
+  0%{transform:rotateY(0deg)}
+  50%{transform:rotateY(180deg)}
+  100%{transform:rotateY(360deg)}
+}
+
+/* ENEMIES */
+.enemy{
+  position:absolute;
+  width:48px;
+  height:44px;
+  bottom:125px;
+  background:#7b3f22;
+  border:3px solid #222;
+  border-radius:20px 20px 12px 12px;
+  z-index:15;
+}
+
+.enemy:before,
+.enemy:after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:9px;
+  background:white;
+  border:2px solid #222;
+  border-radius:50%;
+  top:8px;
+}
+
+.enemy:before{left:9px}
+.enemy:after{right:9px}
+
+.enemy.dead{
+  display:none;
+}
+
+/* BLOCKS */
+.block{
+  position:absolute;
+  width:60px;
+  height:60px;
+  background:#c8782d;
+  border:4px solid #824514;
+  border-radius:8px;
+  z-index:8;
+}
+
+.block:after{
+  content:"?";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:32px;
+  font-weight:bold;
+}
+
+/* FLAG */
+#flag{
+  position:absolute;
+  left:4650px;
+  bottom:125px;
+  width:10px;
+  height:190px;
+  background:#333;
+  z-index:10;
+}
+
+#flag:after{
+  content:"";
+  position:absolute;
+  left:10px;
+  top:5px;
+  width:100px;
+  height:65px;
+  background:#ff3d3d;
+  clip-path:polygon(0 0,100% 25%,0 100%);
+}
+
+/* HUD */
+#hud{
+  position:fixed;
+  top:12px;
+  left:12px;
+  right:12px;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  text-shadow:2px 2px 3px #222;
+  pointer-events:none;
+}
+
+.hudbox{
+  background:rgba(0,0,0,.45);
+  padding:8px 12px;
+  border-radius:12px;
+}
+
+/* CONTROLS */
+#controls{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:18px;
+  z-index:200;
+  display:flex;
+  justify-content:space-between;
+  padding:0 18px;
+  pointer-events:none;
+}
+
+.controlGroup{
+  display:flex;
+  gap:12px;
+  pointer-events:auto;
+}
+
+.btn{
+  width:68px;
+  height:68px;
+  border:0;
+  border-radius:50%;
+  background:rgba(20,20,20,.65);
+  color:white;
+  font-size:28px;
+  font-weight:bold;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  user-select:none;
+}
+
+.btn:active{
+  transform:scale(.92);
+  background:rgba(255,255,255,.35);
+}
+
+/* MESSAGE */
+#message{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  background:rgba(0,0,0,.72);
+  color:white;
+  text-align:center;
+}
+
+#message h1{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+#message p{
+  font-size:20px;
+  margin-bottom:25px;
+}
+
+#restart{
+  border:0;
+  padding:14px 28px;
+  border-radius:12px;
+  background:#ffd32a;
+  font-size:18px;
+  font-weight:bold;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .sun{
+    width:70px;
+    height:70px;
+  }
+
+  #hud{
+    font-size:13px;
+  }
+
+  .hudbox{
+    padding:6px 8px;
+  }
+
+  .btn{
+    width:62px;
+    height:62px;
+    font-size:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+  <div id="world">
+
+    <div class="sun"></div>
+
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+    <div class="cloud c5"></div>
+
+    <div class="mountain m1"></div>
+    <div class="mountain m2"></div>
+    <div class="mountain m3"></div>
+    <div class="mountain m4"></div>
+    <div class="mountain m5"></div>
+
+    <div id="ground">
+      <div class="ground-line"></div>
+    </div>
+
+    <!-- PLAYER -->
+    <div id="player">
+      <div class="hair"></div>
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+      </div>
+      <div class="body"></div>
+      <div class="leg left"></div>
+      <div class="leg right"></div>
+    </div>
+
+    <!-- COINS -->
+    <div class="coin" style="left:450px;bottom:280px"></div>
+    <div class="coin" style="left:650px;bottom:360px"></div>
+    <div class="coin" style="left:850px;bottom:280px"></div>
+    <div class="coin" style="left:1200px;bottom:330px"></div>
+    <div class="coin" style="left:1450px;bottom:280px"></div>
+    <div class="coin" style="left:1750px;bottom:350px"></div>
+    <div class="coin" style="left:2050px;bottom:280px"></div>
+    <div class="coin" style="left:2400px;bottom:350px"></div>
+    <div class="coin" style="left:2800px;bottom:280px"></div>
+    <div class="coin" style="left:3200px;bottom:350px"></div>
+    <div class="coin" style="left:3650px;bottom:280px"></div>
+    <div class="coin" style="left:4100px;bottom:350px"></div>
+    <div class="coin" style="left:4450px;bottom:280px"></div>
+
+    <!-- BLOCKS -->
+    <div class="block" style="left:780px;bottom:125px"></div>
+    <div class="block" style="left:1550px;bottom:125px"></div>
+    <div class="block" style="left:2250px;bottom:125px"></div>
+    <div class="block" style="left:3000px;bottom:125px"></div>
+    <div class="block" style="left:3850px;bottom:125px"></div>
+
+    <!-- ENEMIES -->
+    <div class="enemy" id="enemy1"
+         style="left:1000px"
+         data-start="1000"
+         data-direction="1"></div>
+
+    <div class="enemy" id="enemy2"
+         style="left:1750px"
+         data-start="1750"
+         data-direction="-1"></div>
+
+    <div class="enemy" id="enemy3"
+         style="left:2600px"
+         data-start="2600"
+         data-direction="1"></div>
+
+    <div class="enemy" id="enemy4"
+         style="left:3400px"
+         data-start="3400"
+         data-direction="-1"></div>
+
+    <div class="enemy" id="enemy5"
+         style="left:4200px"
+         data-start="4200"
+         data-direction="1"></div>
+
+    <!-- FINISH -->
+    <div id="flag"></div>
+
+  </div>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+
+  <div class="hudbox">
+    ⭐ Score: <span id="score">0</span>
+  </div>
+
+  <div class="hudbox">
+    🪙 <span id="coins">0</span>
+  </div>
+
+  <div class="hudbox">
+    ❤️ <span id="lives">3</span>
+  </div>
+
+  <div class="hudbox">
+    🏁 Level 1
+  </div>
+
+</div>
+
+<!-- CONTROLS -->
+<div id="controls">
+
+  <div class="controlGroup">
+
+    <button class="btn" id="leftBtn">◀</button>
+
+    <button class="btn" id="rightBtn">▶</button>
+
+  </div>
+
+  <div class="controlGroup">
+
+    <button class="btn" id="jumpBtn">⬆</button>
+
+  </div>
+
+</div>
+
+<!-- MESSAGE -->
+<div id="message">
+
+  <h1 id="messageTitle">Game Over</h1>
+
+  <p id="messageText">
+    Try again!
+  </p>
+
+  <button id="restart">
+    🔄 Restart
+  </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   GAME SETTINGS
+========================= */
+
+const WORLD_WIDTH = 5000;
+const GROUND_HEIGHT = 125;
+
+const playerWidth = 44;
+const playerHeight = 64;
 
 
 /* =========================
-   PLAYER
+   GAME VARIABLES
 ========================= */
 
-#player{
+let playerX = 100;
+let playerY = 0;
 
-    position:absolute;
+let velocityY = 0;
 
-    left:100px;
-    bottom:125px;
+let jumping = false;
 
-    width:44px;
-    height:64px;
+let leftPressed = false;
+let rightPressed = false;
+let jumpPressed = false;
 
-    z-index:10;
+let jumpLock = false;
 
-    transition:none;
-}
+let cameraX = 0;
+
+let score = 0;
+let coinCount = 0;
+let lives = 3;
+
+let gameRunning = true;
+
+let invincibleUntil = 0;
 
 
-/* HAT */
+/* =========================
+   ELEMENTS
+========================= */
 
-.hat{
+const world =
+  document.getElementById("world");
 
-    position:absolute;
+const player =
+  document.getElementById("player");
 
-    left:5px;
-    top:0;
+const scoreText =
+  document.getElementById("score");
 
-    width:34
+const coinsText =
+  document.getElementById("coins");
+
+const livesText =
+  document.getElementById("lives");
+
+const message =
+  document.getElementById("message");
+
+const messageTitle =
+  document.getElementById("messageTitle");
+
+const messageText =
+  document.getElementById("messageText");
+
+
+/* =========================
+   BUTTON CONTROLS
+========================= */
+
+function holdButton(button, press, release){
+
+  button.addEventListener(
+    "touchstart",
+    function(e){
+      e.preventDefault();
+      press();
+    },
+    {passive:false}
+  );
+
+  button.addEventListener(
+    "touchend",
+    function(e){
+      e.preventDefault();
+      release();
+    },
+    {passive:false}
+  );
+
+  button.addEventListener(
+    "touchcancel",
+    function(){
+      release();
+    }
+  );
+
+  button.addEventListener(
+    "mousedown",
+    function(e){
+      e.preventDefault();
+      press();
+    }
+  );
+
+  button.addEventListener(
+    "mouseup",
+    release
