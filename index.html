@@ -4,222 +4,181 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
+      content="width=device-width,
+      initial-scale=1,
+      maximum-scale=1,
+      user-scalable=no,
+      viewport-fit=cover">
 
-<title>Pixel Quest</title>
+<title>Pixel Quest - Selvan</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#10152d;
-  font-family:Arial,sans-serif;
-  touch-action:none;
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#10162d;
+    touch-action:none;
+    font-family:Arial,sans-serif;
 }
 
-#game{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
+canvas{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100vw;
+    height:100vh;
+    display:block;
 }
 
-/* HUD */
+/* ================= HUD ================= */
 
 #hud{
-  position:fixed;
-  top:12px;
-  left:10px;
-  right:10px;
-  z-index:5;
+    position:fixed;
+    top:12px;
+    left:10px;
+    right:10px;
 
-  display:flex;
-  justify-content:space-between;
-  gap:6px;
+    display:flex;
+    justify-content:space-between;
 
-  pointer-events:none;
+    z-index:10;
+
+    pointer-events:none;
 }
 
-.box{
-  background:#141b35e8;
-  border:2px solid #8c98b5;
-  border-radius:14px;
+.hudBox{
+    background:#17203bd9;
+    color:white;
 
-  color:white;
-  font-size:15px;
-  font-weight:bold;
+    border:2px solid #8490ad;
+    border-radius:14px;
 
-  padding:8px 10px;
+    padding:8px 10px;
 
-  box-shadow:0 4px 12px #0005;
+    font-size:14px;
+    font-weight:bold;
+
+    box-shadow:0 4px 12px #0005;
 }
 
-/* CONTROLS */
+/* ================= CONTROLS ================= */
 
 #controls{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:18px;
+    position:fixed;
 
-  z-index:6;
+    left:0;
+    right:0;
 
-  display:flex;
-  justify-content:space-between;
+    bottom:20px;
 
-  padding:0 18px;
+    z-index:20;
 
-  pointer-events:none;
+    display:flex;
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    pointer-events:none;
 }
 
 .controlGroup{
-  display:flex;
-  gap:12px;
+    display:flex;
+    gap:12px;
 }
 
 .control{
-  width:72px;
-  height:72px;
+    width:70px;
+    height:70px;
 
-  border-radius:22px;
+    border-radius:22px;
 
-  background:#151c38dd;
+    background:#17203be8;
 
-  border:3px solid #aeb8d0;
+    border:3px solid #a9b3ca;
 
-  color:white;
+    color:white;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-  font-size:32px;
-  font-weight:bold;
+    font-size:31px;
+    font-weight:bold;
 
-  box-shadow:
-    0 7px 0 #070b18aa;
+    box-shadow:
+        0 7px 0 #080c19;
 
-  pointer-events:auto;
+    pointer-events:auto;
 
-  user-select:none;
+    user-select:none;
 }
 
 .control:active{
-  transform:translateY(5px);
-  box-shadow:0 2px 0 #070b18aa;
-  background:#354064;
+    transform:translateY(5px);
+    box-shadow:
+        0 2px 0 #080c19;
+    background:#344064;
 }
 
-/* MENU */
+/* ================= GAME OVER ================= */
 
-#menu{
-  position:fixed;
-  inset:0;
+#gameOver{
+    position:fixed;
+    inset:0;
 
-  z-index:20;
+    background:#070c1de8;
 
-  background:#080d20dd;
+    z-index:50;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
+    display:none;
 
-  padding:20px;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    text-align:center;
 }
 
-.panel{
-  width:min(92%,430px);
+.gameOverBox{
+    background:#17203b;
+    border:3px solid #8793b1;
+    border-radius:24px;
 
-  background:#161e3bf5;
+    padding:30px;
 
-  border:3px solid #7886aa;
-
-  border-radius:25px;
-
-  padding:30px 20px;
-
-  text-align:center;
-
-  color:white;
-
-  box-shadow:0 20px 60px #0009;
+    width:85%;
+    max-width:400px;
 }
 
-.panel h1{
-  font-size:46px;
-  color:#ffe35a;
-  text-shadow:4px 4px #b83c61;
+.gameOverBox h1{
+    color:#ffe35a;
+    font-size:40px;
+    margin-bottom:15px;
 }
 
-.panel h2{
-  color:#73e7ff;
-  margin:5px 0 15px;
-}
+.restart{
+    margin-top:20px;
 
-.panel p{
-  color:#d8e4ff;
-  line-height:1.5;
-  margin-bottom:15px;
-}
+    border:0;
+    border-radius:14px;
 
-button{
-  border:0;
-  border-radius:14px;
+    padding:14px 25px;
 
-  padding:14px 25px;
+    font-size:17px;
+    font-weight:bold;
 
-  margin:5px;
-
-  font-size:17px;
-  font-weight:bold;
-
-  background:#ffd34d;
-  color:#182039;
-
-  box-shadow:0 5px #ae7820;
-}
-
-button:active{
-  transform:translateY(4px);
-  box-shadow:0 1px #ae7820;
-}
-
-#help{
-  background:#6edcc4;
-  box-shadow:0 5px #398f7e;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* Small screens */
-
-@media(max-width:380px){
-
-  .control{
-    width:62px;
-    height:62px;
-  }
-
-  .box{
-    font-size:13px;
-    padding:7px;
-  }
-
+    background:#ffd34d;
+    color:#182039;
 }
 </style>
 </head>
@@ -228,89 +187,75 @@ button:active{
 
 <canvas id="game"></canvas>
 
-<!-- HUD -->
+<!-- ================= HUD ================= -->
 
 <div id="hud">
 
-  <div class="box">
-    ⭐ <span id="score">0</span>
-  </div>
+    <div class="hudBox">
+        ⭐ <span id="score">0</span>
+    </div>
 
-  <div class="box">
-    🪙 <span id="coins">0</span>
-  </div>
+    <div class="hudBox">
+        🪙 <span id="coinCount">0</span>
+    </div>
 
-  <div class="box">
-    ❤️ <span id="lives">3</span>
-  </div>
+    <div class="hudBox">
+        ❤️ <span id="lives">3</span>
+    </div>
 
-  <div class="box">
-    🌍 <span id="level">1</span>
-  </div>
+    <div class="hudBox">
+        🌍 <span id="level">1</span>
+    </div>
 
 </div>
 
 
-<!-- CONTROLS -->
+<!-- ================= CONTROLS ================= -->
 
 <div id="controls">
 
-  <div class="controlGroup">
+    <div class="controlGroup">
 
-    <div
-      class="control"
-      id="left">
-      ◀
+        <div class="control" id="leftButton">
+            ◀
+        </div>
+
+        <div class="control" id="rightButton">
+            ▶
+        </div>
+
     </div>
 
-    <div
-      class="control"
-      id="right">
-      ▶
+    <div class="controlGroup">
+
+        <div class="control" id="jumpButton">
+            ▲
+        </div>
+
     </div>
-
-  </div>
-
-
-  <div class="controlGroup">
-
-    <div
-      class="control"
-      id="jump">
-      ▲
-    </div>
-
-  </div>
 
 </div>
 
 
-<!-- MENU -->
+<!-- ================= GAME OVER ================= -->
 
-<div id="menu">
+<div id="gameOver">
 
-  <div class="panel">
+    <div class="gameOverBox">
 
-    <h1>PIXEL QUEST</h1>
+        <h1>GAME OVER</h1>
 
-    <h2>SELVA ADVENTURE</h2>
+        <p>
+            Score:
+            <span id="finalScore">0</span>
+        </p>
 
-    <p>
-      🏃 Run through the world<br>
-      🪙 Collect coins<br>
-      👾 Jump on enemies<br>
-      🏁 Reach the flag
-    </p>
+        <button class="restart"
+                onclick="restartGame()">
+            PLAY AGAIN
+        </button>
 
-    <button id="start">
-      ▶ PLAY GAME
-    </button>
-
-    <button id="help">
-      HOW TO PLAY
-    </button>
-
-  </div>
+    </div>
 
 </div>
 
@@ -322,216 +267,1573 @@ button:active{
 ===================================================== */
 
 const canvas =
-document.getElementById("game");
+    document.getElementById("game");
 
 const ctx =
-canvas.getContext("2d");
+    canvas.getContext("2d");
 
-let W;
-let H;
+let screenWidth = 0;
+let screenHeight = 0;
+let pixelRatio = 1;
 
-function resize(){
+function resizeCanvas(){
 
-  W=window.innerWidth;
-  H=window.innerHeight;
+    screenWidth =
+        window.innerWidth;
 
-  const dpr=
-    Math.min(
-      window.devicePixelRatio || 1,
-      2
+    screenHeight =
+        window.innerHeight;
+
+    pixelRatio =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    canvas.width =
+        screenWidth * pixelRatio;
+
+    canvas.height =
+        screenHeight * pixelRatio;
+
+    canvas.style.width =
+        screenWidth + "px";
+
+    canvas.style.height =
+        screenHeight + "px";
+
+    ctx.setTransform(
+        pixelRatio,
+        0,
+        0,
+        pixelRatio,
+        0,
+        0
     );
-
-  canvas.width=
-    W*dpr;
-
-  canvas.height=
-    H*dpr;
-
-  canvas.style.width=
-    W+"px";
-
-  canvas.style.height=
-    H+"px";
-
-  ctx.setTransform(
-    dpr,
-    0,
-    0,
-    dpr,
-    0,
-    0
-  );
 }
 
 window.addEventListener(
-  "resize",
-  resize
+    "resize",
+    resizeCanvas
 );
 
-resize();
+resizeCanvas();
 
 
 /* =====================================================
    INPUT
 ===================================================== */
 
-const input={
-  left:false,
-  right:false,
-  jump:false
-};
+let leftPressed = false;
+let rightPressed = false;
+let jumpPressed = false;
 
-function button(id,key){
+function setupButton(id,down,up){
 
-  const el=
-    document.getElementById(id);
+    const button =
+        document.getElementById(id);
 
-  const down=e=>{
-    e.preventDefault();
-    input[key]=true;
-  };
+    button.addEventListener(
+        "touchstart",
+        function(e){
+            e.preventDefault();
+            down();
+        },
+        {passive:false}
+    );
 
-  const up=e=>{
-    e.preventDefault();
-    input[key]=false;
-  };
+    button.addEventListener(
+        "touchend",
+        function(e){
+            e.preventDefault();
+            up();
+        },
+        {passive:false}
+    );
 
-  el.addEventListener(
-    "touchstart",
-    down,
-    {passive:false}
-  );
+    button.addEventListener(
+        "touchcancel",
+        function(e){
+            e.preventDefault();
+            up();
+        },
+        {passive:false}
+    );
 
-  el.addEventListener(
-    "touchend",
-    up,
-    {passive:false}
-  );
+    button.addEventListener(
+        "mousedown",
+        function(){
+            down();
+        }
+    );
 
-  el.addEventListener(
-    "touchcancel",
-    up,
-    {passive:false}
-  );
+    button.addEventListener(
+        "mouseup",
+        function(){
+            up();
+        }
+    );
 
-  el.addEventListener(
-    "mousedown",
-    down
-  );
-
-  el.addEventListener(
-    "mouseup",
-    up
-  );
-
-  el.addEventListener(
-    "mouseleave",
-    up
-  );
+    button.addEventListener(
+        "mouseleave",
+        function(){
+            up();
+        }
+    );
 }
 
-button("left","left");
-button("right","right");
-button("jump","jump");
+
+setupButton(
+    "leftButton",
+    ()=>leftPressed=true,
+    ()=>leftPressed=false
+);
+
+setupButton(
+    "rightButton",
+    ()=>rightPressed=true,
+    ()=>rightPressed=false
+);
+
+setupButton(
+    "jumpButton",
+    ()=>jumpPressed=true,
+    ()=>jumpPressed=false
+);
 
 
 /* KEYBOARD */
 
 window.addEventListener(
-  "keydown",
-  e=>{
+    "keydown",
+    function(e){
 
-    if(
-      e.key==="ArrowLeft" ||
-      e.key==="a"
-    )
-      input.left=true;
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a" ||
+            e.key==="A"
+        ){
+            leftPressed=true;
+        }
 
-    if(
-      e.key==="ArrowRight" ||
-      e.key==="d"
-    )
-      input.right=true;
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d" ||
+            e.key==="D"
+        ){
+            rightPressed=true;
+        }
 
-    if(
-      e.key==="ArrowUp" ||
-      e.key===" " ||
-      e.key==="w"
-    )
-      input.jump=true;
+        if(
+            e.key==="ArrowUp" ||
+            e.key==="w" ||
+            e.key==="W" ||
+            e.code==="Space"
+        ){
+            jumpPressed=true;
+        }
 
-  }
+    }
 );
 
+
 window.addEventListener(
-  "keyup",
-  e=>{
+    "keyup",
+    function(e){
 
-    if(
-      e.key==="ArrowLeft" ||
-      e.key==="a"
-    )
-      input.left=false;
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a" ||
+            e.key==="A"
+        ){
+            leftPressed=false;
+        }
 
-    if(
-      e.key==="ArrowRight" ||
-      e.key==="d"
-    )
-      input.right=false;
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d" ||
+            e.key==="D"
+        ){
+            rightPressed=false;
+        }
 
-    if(
-      e.key==="ArrowUp" ||
-      e.key===" " ||
-      e.key==="w"
-    )
-      input.jump=false;
+        if(
+            e.key==="ArrowUp" ||
+            e.key==="w" ||
+            e.key==="W" ||
+            e.code==="Space"
+        ){
+            jumpPressed=false;
+        }
 
-  }
+    }
 );
 
 
 /* =====================================================
-   GAME STATE
+   GAME VARIABLES
 ===================================================== */
 
-let playing=false;
+let score = 0;
+let coinCount = 0;
+let lives = 3;
+let currentLevel = 1;
 
-let score=0;
-let coinCount=0;
-let lives=3;
-let level=1;
+let gameRunning = true;
 
-let camera=0;
+let cameraX = 0;
+
+let jumpWasPressed = false;
+
+
+/* =====================================================
+   WORLD
+===================================================== */
+
+let worldWidth = 0;
+
+let groundY = 0;
+
+let platforms = [];
+let coins = [];
+let enemies = [];
 
 let player;
 
-let platforms=[];
-let coins=[];
-let enemies=[];
+
+/* =====================================================
+   CREATE WORLD
+===================================================== */
+
+function createWorld(){
+
+    worldWidth =
+        screenWidth * 8;
+
+    groundY =
+        screenHeight - 145;
+
+    platforms = [];
+    coins = [];
+    enemies = [];
+
+
+    /* ================= GROUND ================= */
+
+    platforms.push({
+
+        x:0,
+
+        y:groundY,
+
+        width:worldWidth,
+
+        height:145
+
+    });
+
+
+    /* ================= FLOATING PLATFORMS ================= */
+
+    const platformList = [
+
+        [screenWidth*0.6, groundY-100, 150],
+
+        [screenWidth*1.1, groundY-180, 150],
+
+        [screenWidth*1.65, groundY-110, 170],
+
+        [screenWidth*2.2, groundY-210, 160],
+
+        [screenWidth*2.8, groundY-130, 170],
+
+        [screenWidth*3.35, groundY-230, 170],
+
+        [screenWidth*4.0, groundY-150, 180],
+
+        [screenWidth*4.6, groundY-250, 170],
+
+        [screenWidth*5.2, groundY-120, 180],
+
+        [screenWidth*5.8, groundY-220, 170],
+
+        [screenWidth*6.5, groundY-140, 190],
+
+        [screenWidth*7.1, groundY-230, 180]
+
+    ];
+
+
+    for(
+        const p of platformList
+    ){
+
+        platforms.push({
+
+            x:p[0],
+
+            y:p[1],
+
+            width:p[2],
+
+            height:25
+
+        });
+
+    }
+
+
+    /* ================= COINS ================= */
+
+    const coinPositions = [
+
+        [screenWidth*0.45,groundY-45],
+
+        [screenWidth*0.7,groundY-145],
+
+        [screenWidth*1.17,groundY-225],
+
+        [screenWidth*1.72,groundY-155],
+
+        [screenWidth*2.28,groundY-255],
+
+        [screenWidth*2.86,groundY-175],
+
+        [screenWidth*3.42,groundY-275],
+
+        [screenWidth*4.08,groundY-195],
+
+        [screenWidth*4.67,groundY-295],
+
+        [screenWidth*5.28,groundY-165],
+
+        [screenWidth*5.87,groundY-265],
+
+        [screenWidth*6.57,groundY-185],
+
+        [screenWidth*7.18,groundY-275]
+
+    ];
+
+
+    for(
+        const c of coinPositions
+    ){
+
+        coins.push({
+
+            x:c[0],
+
+            y:c[1],
+
+            radius:13,
+
+            collected:false,
+
+            animation:
+                Math.random()*6.28
+
+        });
+
+    }
+
+
+    /* ================= ENEMIES ================= */
+
+    const enemyPositions = [
+
+        screenWidth*1.35,
+
+        screenWidth*2.55,
+
+        screenWidth*3.7,
+
+        screenWidth*4.95,
+
+        screenWidth*6.1,
+
+        screenWidth*7.35
+
+    ];
+
+
+    for(
+        const x of enemyPositions
+    ){
+
+        enemies.push({
+
+            x:x,
+
+            y:groundY-42,
+
+            width:42,
+
+            height:42,
+
+            speed:1.3,
+
+            direction:-1,
+
+            alive:true
+
+        });
+
+    }
+
+
+    /* ================= PLAYER ================= */
+
+    player = {
+
+        x:80,
+
+        y:groundY-62,
+
+        width:42,
+
+        height:62,
+
+        velocityX:0,
+
+        velocityY:0,
+
+        onGround:false,
+
+        invincible:0
+
+    };
+
+}
 
 
 /* =====================================================
-   LEVELS
+   START / RESTART
 ===================================================== */
 
-const levelData=[
+function restartGame(){
 
-[
-  [0,0.82,0.55],
-  [0.62,0.82,0.38],
+    score=0;
 
-  [0.12,0.68,0.18],
-  [0.34,0.57,0.16],
-  [0.58,0.67,0.17],
-  [0.78,0.55,0.16]
-],
+    coinCount=0;
 
-[
-  [0,0.82,0.40],
-  [0.47,0.82,0.28],
-  [0.80,0.82,0.40],
+    lives=3;
 
-  [0.10,0.67,0.18],
-  [0.32,0.55,0.16],
-  [0.52,0.67,0.18],
-  [0.70,0.52
+    currentLevel=1;
+
+    cameraX=0;
+
+    gameRunning=true;
+
+    document.getElementById(
+        "gameOver"
+    ).style.display="none";
+
+    createWorld();
+
+}
+
+
+/* START AUTOMATICALLY */
+
+createWorld();
+
+
+/* =====================================================
+   COLLISION
+===================================================== */
+
+function intersects(a,b){
+
+    return (
+
+        a.x <
+        b.x+b.width &&
+
+        a.x+a.width >
+        b.x &&
+
+        a.y <
+        b.y+b.height &&
+
+        a.y+a.height >
+        b.y
+
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE PLAYER
+===================================================== */
+
+function updatePlayer(){
+
+    if(!gameRunning)
+        return;
+
+
+    /* MOVEMENT */
+
+    if(leftPressed){
+
+        player.velocityX -= 0.65;
+
+    }
+
+    if(rightPressed){
+
+        player.velocityX += 0.65;
+
+    }
+
+
+    if(
+        !leftPressed &&
+        !rightPressed
+    ){
+
+        player.velocityX *= 0.82;
+
+    }
+
+
+    if(
+        player.velocityX > 6
+    )
+        player.velocityX=6;
+
+
+    if(
+        player.velocityX < -6
+    )
+        player.velocityX=-6;
+
+
+    /* JUMP */
+
+    if(
+        jumpPressed &&
+        !jumpWasPressed &&
+        player.onGround
+    ){
+
+        player.velocityY=-14;
+
+        player.onGround=false;
+
+    }
+
+    jumpWasPressed =
+        jumpPressed;
+
+
+    /* GRAVITY */
+
+    player.velocityY += 0.65;
+
+
+    if(
+        player.velocityY > 17
+    ){
+
+        player.velocityY=17;
+
+    }
+
+
+    /* HORIZONTAL */
+
+    player.x +=
+        player.velocityX;
+
+
+    if(
+        player.x < 0
+    ){
+
+        player.x=0;
+
+    }
+
+
+    /* VERTICAL */
+
+    const previousBottom =
+        player.y+
+        player.height;
+
+
+    player.y +=
+        player.velocityY;
+
+
+    player.onGround=false;
+
+
+    /* PLATFORM COLLISION */
+
+    for(
+        const p of platforms
+    ){
+
+        if(
+
+            player.x+
+            player.width >
+            p.x &&
+
+            player.x <
+            p.x+p.width &&
+
+            previousBottom <=
+            p.y &&
+
+            player.y+
+            player.height >=
+            p.y &&
+
+            player.velocityY >= 0
+
+        ){
+
+            player.y =
+                p.y-
+                player.height;
+
+            player.velocityY=0;
+
+            player.onGround=true;
+
+        }
+
+    }
+
+
+    /* FALL */
+
+    if(
+        player.y >
+        screenHeight+200
+    ){
+
+        loseLife();
+
+    }
+
+
+    /* INVINCIBILITY */
+
+    if(
+        player.invincible>0
+    ){
+
+        player.invincible -=
+            0.016;
+
+    }
+
+}
+
+
+/* =====================================================
+   COINS
+===================================================== */
+
+function updateCoins(){
+
+    for(
+        const coin of coins
+    ){
+
+        if(coin.collected)
+            continue;
+
+
+        const dx =
+            player.x+
+            player.width/2-
+            coin.x;
+
+
+        const dy =
+            player.y+
+            player.height/2-
+            coin.y;
+
+
+        const distance =
+            Math.sqrt(
+                dx*dx+
+                dy*dy
+            );
+
+
+        if(
+            distance < 42
+        ){
+
+            coin.collected=true;
+
+            coinCount++;
+
+            score+=100;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   ENEMIES
+===================================================== */
+
+function updateEnemies(){
+
+    for(
+        const enemy of enemies
+    ){
+
+        if(!enemy.alive)
+            continue;
+
+
+        enemy.x +=
+            enemy.speed*
+            enemy.direction;
+
+
+        /* Turn around */
+
+        if(
+            enemy.x <
+            0
+        ){
+
+            enemy.direction=1;
+
+        }
+
+
+        if(
+            enemy.x >
+            worldWidth-
+            enemy.width
+        ){
+
+            enemy.direction=-1;
+
+        }
+
+
+        /* Player collision */
+
+        if(
+            intersects(
+                player,
+                enemy
+            )
+        ){
+
+            /* Player jumped on enemy */
+
+            if(
+
+                player.velocityY>0 &&
+
+                player.y+
+                player.height-
+                enemy.y < 25
+
+            ){
+
+                enemy.alive=false;
+
+                player.velocityY=-10;
+
+                score+=250;
+
+            }
+
+            else{
+
+                loseLife();
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   LOSE LIFE
+===================================================== */
+
+function loseLife(){
+
+    if(
+        player.invincible>0
+    )
+        return;
+
+
+    lives--;
+
+
+    if(
+        lives<=0
+    ){
+
+        gameRunning=false;
+
+        document.getElementById(
+            "finalScore"
+        ).textContent=score;
+
+        document.getElementById(
+            "gameOver"
+        ).style.display="flex";
+
+        return;
+
+    }
+
+
+    player.x=
+        Math.max(
+            50,
+            player.x-250
+        );
+
+    player.y=
+        groundY-150;
+
+    player.velocityX=0;
+
+    player.velocityY=0;
+
+    player.invincible=2;
+
+}
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
+
+function updateCamera(){
+
+    const target =
+        player.x-
+        screenWidth*0.35;
+
+
+    cameraX +=
+        (
+            target-
+            cameraX
+        )*0.10;
+
+
+    if(
+        cameraX<0
+    )
+        cameraX=0;
+
+
+    if(
+        cameraX>
+        worldWidth-screenWidth
+    ){
+
+        cameraX=
+            worldWidth-
+            screenWidth;
+
+    }
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+function drawBackground(){
+
+    /* SKY */
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            screenHeight
+        );
+
+
+    gradient.addColorStop(
+        0,
+        "#49bce9"
+    );
+
+
+    gradient.addColorStop(
+        0.6,
+        "#9be0f5"
+    );
+
+
+    gradient.addColorStop(
+        1,
+        "#d9f7ff"
+    );
+
+
+    ctx.fillStyle=
+        gradient;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        screenWidth,
+        screenHeight
+    );
+
+
+    /* SUN */
+
+    ctx.fillStyle=
+        "#fff09a";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        screenWidth-70,
+        95,
+        45,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* CLOUDS */
+
+    ctx.fillStyle=
+        "#ffffffaa";
+
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const x =
+            (
+                i*240-
+                cameraX*0.15
+            )%
+            (screenWidth+300)
+            -100;
+
+
+        const y =
+            90+
+            (i%3)*75;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            30,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            x+35,
+            y-15,
+            38,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            x+75,
+            y,
+            28,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    }
+
+
+    /* BACK MOUNTAINS */
+
+    ctx.fillStyle=
+        "#69bb7b";
+
+
+    for(
+        let i=-2;
+        i<10;
+        i++
+    ){
+
+        const x =
+            i*260-
+            cameraX*0.25;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            groundY
+        );
+
+        ctx.lineTo(
+            x+130,
+            groundY-230
+        );
+
+        ctx.lineTo(
+            x+260,
+            groundY
+        );
+
+        ctx.fill();
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW PLATFORMS
+===================================================== */
+
+function drawPlatforms(){
+
+    for(
+        const p of platforms
+    ){
+
+        const x =
+            p.x-cameraX;
+
+
+        /* Don't draw far away */
+
+        if(
+            x+p.width<0 ||
+            x>screenWidth
+        )
+            continue;
+
+
+        /* DIRT */
+
+        ctx.fillStyle=
+            "#70462d";
+
+
+        ctx.fillRect(
+            x,
+            p.y,
+            p.width,
+            p.height
+        );
+
+
+        /* GRASS */
+
+        ctx.fillStyle=
+            "#45b957";
+
+
+        ctx.fillRect(
+            x,
+            p.y,
+            p.width,
+            12
+        );
+
+
+        /* GRASS DETAILS */
+
+        ctx.fillStyle=
+            "#318d45";
+
+
+        for(
+            let xx=x+10;
+            xx<x+p.width;
+            xx+=35
+        ){
+
+            ctx.fillRect(
+                xx,
+                p.y+18,
+                9,
+                8
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW PLAYER
+===================================================== */
+
+function drawPlayer(){
+
+    const x =
+        player.x-
+        cameraX;
+
+
+    const y =
+        player.y;
+
+
+    /* Blink when hurt */
+
+    if(
+        player.invincible>0 &&
+        Math.floor(
+            Date.now()/100
+        )%2===0
+    ){
+
+        return;
+
+    }
+
+
+    ctx.save();
+
+    ctx.translate(
+        x,
+        y
+    );
+
+
+    /* HAT */
+
+    ctx.fillStyle=
+        "#ff654d";
+
+
+    ctx.fillRect(
+        5,
+        4,
+        31,
+        12
+    );
+
+
+    ctx.fillRect(
+        0,
+        12,
+        13,
+        7
+    );
+
+
+    /* HAIR */
+
+    ctx.fillStyle=
+        "#29324d";
+
+
+    ctx.fillRect(
+        9,
+        12,
+        24,
+        18
+    );
+
+
+    /* FACE */
+
+    ctx.fillStyle=
+        "#ffd09d";
+
+
+    ctx.fillRect(
+        11,
+        19,
+        20,
+        19
+    );
+
+
+    /* EYES */
+
+    ctx.fillStyle=
+        "#22283d";
+
+
+    ctx.fillRect(
+        14,
+        24,
+        3,
+        4
+    );
+
+
+    ctx.fillRect(
+        24,
+        24,
+        3,
+        4
+    );
+
+
+    /* BODY */
+
+    ctx.fillStyle=
+        "#32c5a4";
+
+
+    ctx.fillRect(
+        7,
+        38,
+        27,
+        15
+    );
+
+
+    /* LEGS */
+
+    ctx.fillStyle=
+        "#27304b";
+
+
+    ctx.fillRect(
+        5,
+        52,
+        12,
+        8
+    );
+
+
+    ctx.fillRect(
+        23,
+        52,
+        12,
+        8
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW ENEMIES
+===================================================== */
+
+function drawEnemies(){
+
+    for(
+        const enemy of enemies
+    ){
+
+        if(!enemy.alive)
+            continue;
+
+
+        const x =
+            enemy.x-
+            cameraX;
+
+
+        if(
+            x+enemy.width<0 ||
+            x>screenWidth
+        )
+            continue;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            enemy.y
+        );
+
+
+        /* BODY */
+
+        ctx.fillStyle=
+            "#a43f69";
+
+
+        ctx.fillRect(
+            2,
+            8,
+            38,
+            27
+        );
+
+
+        ctx.fillStyle=
+            "#e45b72";
+
+
+        ctx.fillRect(
+            8,
+            3,
+            27,
+            29
+        );
+
+
+        /* EYES */
+
+        ctx.fillStyle=
+            "white";
+
+
+        ctx.fillRect(
+            10,
+            14,
+            7,
+            8
+        );
+
+
+        ctx.fillRect(
+            25,
+            14,
+            7,
+            8
+        );
+
+
+        ctx.fillStyle=
+            "#20243a";
+
+
+        ctx.fillRect(
+            12,
+            16,
+            4,
+            4
+        );
+
+
+        ctx.fillRect(
+            27,
+            16,
+            4,
+            4
+        );
+
+
+        /* FEET */
+
+        ctx.fillRect(
+            3,
+            34,
+            12,
+            7
+        );
+
+
+        ctx.fillRect(
+            27,
+            34,
+            12,
+            7
+        );
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW COINS
+===================================================== */
+
+function drawCoins(){
+
+    for(
+        const coin of coins
+    ){
+
+        if(coin.collected)
+            continue;
+
+
+        const x =
+            coin.x-
+            cameraX;
+
+
+        const y =
+            coin.y+
+            Math.sin(
+                Date.now()/150+
+                coin.animation
+            )*5;
+
+
+        if(
+            x<-30 ||
+            x>screenWidth+30
+        )
+            continue;
+
+
+        ctx.save();
+
+        ctx.translate(
+            x,
+            y
+        );
+
+
+        /* COIN */
+
+        ctx.fillStyle=
+            "#ffd83d";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            coin.radius,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+
+        ctx.strokeStyle=
+            "#fff3a0";
+
+        ctx.lineWidth=3;
+
+        ctx.stroke();
+
+
+        ctx.fillStyle=
+            "#a96c18";
+
+        ctx.font=
+            "bold 15px Arial";
+
+        ctx.textAlign=
+            "center";
+
+        ctx.fillText(
+            "$",
+            0,
+            5
+        );
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW FLAG
+===================================================== */
+
+function drawFlag(){
+
+    const flagX =
+        worldWidth-130-
+        cameraX;
+
+
+    /* POLE */
+
+    ctx.fillStyle=
+        "#27314d";
+
+
+    ctx.fillRect(
+        flagX,
+        groundY-120,
+        8,
+        120
+    );
+
+
+    /* FLAG */
+
+    ctx.fillStyle=
+        "#ff5968";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        flagX+8,
+        groundY-115
+    );
+
+    ctx.lineTo(
+        flagX+75,
+        groundY-90
+    );
+
+    ctx.lineTo(
+        flagX+8,
+        groundY-65
+    );
+
+    ctx.fill();
+
+
+    /* BALL */
+
+    ctx.fillStyle=
+        "#ffe35a";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        flagX+4,
+        groundY+7,
+        11,
+        0,
+        Math.PI*2
+   
